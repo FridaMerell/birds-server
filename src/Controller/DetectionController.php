@@ -19,7 +19,7 @@ class DetectionController extends AbstractController
 {
     public function __construct(
         private readonly DetectionRepository  $repo,
-        private readonly EntityManagerInterface $em,
+        private readonly EntityManagerInterface $em, 
         private readonly DeviceRepository $deviceRepo,
         private readonly SpeciesRepository $speciesRepo,
         private readonly string $piApiKey,         // injected via services.yaml
@@ -33,7 +33,9 @@ class DetectionController extends AbstractController
             return $this->json(['error' => 'Unauthorized'], 401);
         }
 
+        
         $data = json_decode($request->getContent(), true);
+        $deviceId =$data['device_id'] ?? null;
         if (!$this->isValidPayload($data)) {
             return $this->json(['error' => 'Invalid payload'], 422);
         }
@@ -42,7 +44,7 @@ class DetectionController extends AbstractController
         $detection->setSpecies($this->speciesRepo->findOneBy(['scientificName' => $data['species']]));
         $detection->setDetectedAt(new \DateTimeImmutable());
         $detection->setDevice(
-            $this->deviceRepo->findOneBy(['id' => 1])
+            $this->deviceRepo->findOneBy(['name' => $deviceId]) ?? null
         ); // Optional: associate with a Device if you have that info
         $detection->setConfidence((float) $data['confidence']);
 
