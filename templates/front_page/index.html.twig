@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+{# @controller App:FrontPage:index #}
+{% block title %}Artportalen{% endblock %}
+
+{% block body %}
+	<main class="flex row gap-6 gap-m-3">
+		<section class="col-2 my-m-2">
+			<div data-controller="search" class="search">
+				<h3 class="mb-1 underline">Sök efter art</h3>
+				<input type="search" data-search-target="species" data-action="keyup->search#search">
+				<ul class="autocomplete-results" data-search-target="autocomplete_list">
+				</ul>
+				<div data-search-target="links"></div>
+			</div>
+		</section>
+		<section class="col-2">
+			<h1 class="mb-2">
+				Senaste gluttar
+			</h1>
+			{% include 'Partials/LatestSightings.html.twig' %}
+
+		</section>
+	</main>
+{% endblock %}

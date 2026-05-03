@@ -1,0 +1,48 @@
+<h2 class="mb-1">
+	Artfakta
+</h2>
+<div>
+	{% set redlist = data.currentRedlist %}
+	{% if redlist %}
+		<div class="my-1 flex wrap gap-05">
+
+			<h4 class="w-100">Rödlistning:</h4>
+			<div class="w-100">
+				{{ redlist.text|replace({'\n': '<br>'} )|raw }}
+			</div>
+		</div>
+	{% endif %}
+
+	{% set spread = data.spread %}
+	{% if spread %}
+		<div class="my-1 flex wrap gap-05">
+
+			<h4 class="w-100">Utbredning:</h4>
+			<div class="w-100">
+				{{ spread|replace({'\n': '<br>'} )|raw }}
+			</div>
+		</div>
+	{% endif %}
+
+	{% set threat = data.threat %}
+	{% if threat %}
+		<div class="my-1 flex wrap gap-05">
+
+			<h4 class="w-100">Hot:</h4>
+			<div class="w-100">
+				{{ threat|replace({'\n': '<br>'} )|raw }}
+			</div>
+		</div>
+	{% endif %}
+
+	{% set conservationMeasures = data.conservationMeasures %}
+	{% if conservationMeasures %}
+		<div class="my-1 flex wrap gap-05">
+
+			<h4 class="w-100">Åtgärder:</h4>
+			<div class="w-100">
+				{{ conservationMeasures|replace({'\n': '<br>'} )|raw }}
+			</div>
+		</div>
+	{% endif %}
+</div>

@@ -1,0 +1,20 @@
+{# @var sightings \App\Entity\Sighting[] #}
+{% block latest_sightings %}
+	<ol class="list">
+		{% for index, sighting in sightings %}
+			<li class="species flex space">
+				<div class="flex center-vertical gap-1 ">
+					<div class="index">{{ index + 1 }}</div>
+					<div><span class="medium capitalize">{{ sighting.species.vernacularName }}</span>
+						<br>
+						<small>{{ sighting.species.scientificName }}</small></div>
+				</div>
+				<div class="align-right">
+					<span>
+						{{ sighting.dateTime|date('y-m-d') }}
+					</span>
+				</div>
+			</li>
+		{% endfor %}
+	</ol>
+{% endblock %}

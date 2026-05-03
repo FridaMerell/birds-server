@@ -1,0 +1,55 @@
+{% block sighting_settings %}
+	<aside data-controller="sightings" class="sightings-filter">
+		<button data-sightings-target="toggleDialog" data-action="sightings#open">Öppna filter</button>
+		<dialog data-sightings-target="dialog" class="w-70 w-m-90">
+			<output></output>
+			<form data-sightings-target="filter" method="dialog" data-action="submit->sightings#filter">
+				<h2 class="my-2">Filtrera</h2>
+				<div class="my-2">
+					<input type="checkbox" id="distinct" name="distinct">
+					<label for="distinct">
+						Distinkta arter
+					</label>
+				</div>
+				<div class="flex gap-4 w-100 ">
+					{% set years = yearspan() %}
+					<details class="years w-40">
+						<summary>Filtrera efter årtal</summary>
+						<div class=" flex gap-05 wrap my-1">
+							<div>
+								<label><input type="radio" name="year" value="-1" checked><span>Alla år</span></label>
+							</div>
+
+							{% for section in years|batch(3, null) %}
+								{% for year in section %}
+									{% if year %}
+										<div class="flex wrap">
+											<label><input type="radio" name="year"
+														  value="{{ year }}"><span>{{ year }}</span></label>
+										</div>
+									{% endif %}
+								{% endfor %}
+							{% endfor %}
+						</div>
+					</details>
+
+					<details class="w-40">
+						<summary>Sortering</summary>
+						<div class="flex gap-1 my-1">
+							<label >
+								<input type="radio" name="sort" value="az">
+								<span>Alfabetisk</span>
+							</label>
+							<label>
+								<input type="radio" name="sort" checked value="datetime">
+								<span>Kronologisk</span>
+							</label>
+						</div>
+					</details>
+
+				</div>
+				<input type="submit" value="Spara" class="my-2 arrow button">
+			</form>
+		</dialog>
+	</aside>
+{% endblock %}

@@ -1,0 +1,36 @@
+api_platform:
+    title: Hello API Platform
+    version: 1.0.0
+    collection:
+        pagination:
+            enabled: true
+    formats:
+        jsonld:   ['application/ld+json']
+        jsonhal:  ['application/hal+json']
+        jsonapi:  ['application/vnd.api+json']
+        json:     ['application/json']
+        xml:      ['application/xml', 'text/xml']
+        yaml:     ['application/x-yaml']
+        csv:      ['text/csv']
+        html:     ['text/html']
+        graphql:  ['application/graphql']
+    docs_formats:
+        formats:
+        jsonld:   ['application/ld+json']
+        jsonhal:  ['application/hal+json']
+        jsonapi:  ['application/vnd.api+json']
+        json:     ['application/json']
+        xml:      ['application/xml', 'text/xml']
+        yaml:     ['application/x-yaml']
+        csv:      ['text/csv']
+        html:     ['text/html']
+        graphql: ['application/graphql']
+    defaults:
+        pagination_items_per_page: 30 # Default value
+        stateless: true
+        cache_headers:
+            vary: ['Content-Type', 'Authorization', 'Origin']
+        extra_properties:
+            standard_put: true
+            rfc_7807_compliant_errors: true
+    use_symfony_listeners: true

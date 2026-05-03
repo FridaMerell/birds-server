@@ -1,0 +1,36 @@
+form {
+  display: flex;
+  flex-direction: column;
+}
+form label {
+  font-weight: bold;
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 0.2rem;
+}
+form input {
+  max-width: 25rem;
+  padding: 0.3rem 0.5rem;
+  color: #1d373a;
+  border: none;
+  background: rgba(255, 255, 255, 0.7);
+}
+form input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.9);
+}
+form input:invalid {
+  background: rgba(255, 0, 0, 0.3);
+}
+form [type=submit] {
+  width: 10rem;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  color: white;
+  border: none;
+  background: #1d373a;
+}
+
+/*# sourceMappingURL=form.css.map */

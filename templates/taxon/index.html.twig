@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	Arter
+{% endblock %}
+
+{% block body %}
+	<main>
+		<h1 class="mb-2">Arter</h1>
+		{% if search is defined %}
+
+			{% include 'Partials/filters.html.twig' %}
+		{% endif %}
+		<ol class="list">
+			{% for index,taxon in species %}
+				<li class="flex py-1 py-m-2 gap-4 gap-m-1 wrap bb-1">
+					<div class="flex gap-3 gap-m-1 w-33 w-m-100">
+						<div class="index">
+							{{ index + 1 }}
+						</div>
+						<div class="capitalize">
+							<span>{{ taxon.VernacularName }}</span><br>
+							<small>{{ taxon.ScientificName }}</small>
+						</div>
+					</div>
+					<div class="w-33 w-m-100">
+						<span>
+							{{ taxon.SwedishProminence }}
+						</span>
+					</div>
+					<div class="flex gap-1 center-vertical w-m-100 ">
+						<a href="{{ path('app_species', {'species': taxon.id}) }}">
+							<img src="{{ asset('assets/eye_white.svg') }}">
+							<span>
+								Visa
+							</span>
+						</a>
+						<div class="divider"></div>
+						<a href="{{ path('app_sighting_new', {'species': taxon.id}) }}">
+							<img src="{{ asset('assets/edit.svg') }}">
+							<span>
+								Registrera
+							</span>
+						</a>
+					</div>
+				</li>
+			{% endfor %}
+		</ol>
+
+		<div class="flex gap-2">
+			{% if p is defined %}
+
+				{% if p > 0 %}
+					<a href="{{ path('app_taxon_species_list', {'p': p - 1,'search' : search, 'swedish': swedish}) }}"
+					   class="button">
+						Förgående sida
+					</a>
+				{% endif %}
+				<a href="{{ path('app_taxon_species_list', {'p': p +1, 'search' : search, 'swedish': swedish}) }}"
+				   class="button">
+					Nästa sida
+				</a>
+			{% endif %}
+		</div>
+	</main>
+{% endblock %}

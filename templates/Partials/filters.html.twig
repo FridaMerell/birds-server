@@ -1,0 +1,19 @@
+{% block filters %}
+	<aside data-controller="filters">
+		<form class="">
+			<div>
+				<label for="search">Sök</label>
+				<input type="search" name="search" value="{{ search }}">
+			</div>
+			<div class="flex gap-2 my-2">
+				{% set checked = swedish ? 'checked' : '' %}
+				<input type="checkbox" id="swedish" name="swedish" {{ checked }}>
+				<label for="swedish">
+					Endast svenska
+				</label>
+				<input type="submit" value="Filtrera">
+			</div>
+		</form>
+		<hr>
+	</aside>
+{% endblock %}

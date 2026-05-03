@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nytt span{% endblock %}
+
+{% block body %}
+	<main>
+		<h1 class="my-2">Registrera glutt</h1>
+
+		{{ include('sighting/_form.html.twig') }}
+
+		<a href="{{ path('app_sighting_index') }}" class="button">Visa tidigare</a>
+	</main>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+{% block title %}
+	{{ location.name }}
+{% endblock %}
+
+{% block body %}
+	<main data-controller="location"
+		  data-location-lat-value="{{ location.point.latitude }}"
+		  data-location-lng-value="{{ location.point.longitude }}"
+		  data-location-radius-value="{{ location.radius }}"
+		  data-location-maps-value="{{ google_maps }}">
+		<h1 class="my-2">{{ location.name }}</h1>
+		<div class="map"
+			 data-location-target="map"
+		></div>
+	</main>
+{% endblock %}
+

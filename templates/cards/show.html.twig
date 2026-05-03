@@ -1,0 +1,73 @@
+{% extends "base.html.twig" %}
+{% block body %}
+	<div data-controller="card" data-card-id-value="{{ card.id }}">
+		<h1 class="my-2 my-p-0">{{ card.name }}</h1>
+		<div class="flex gap-3 hide-print">
+			<span class="uppercase">{{ card.DistinctSightings|length }} kryss</span>
+			<span class="uppercase">
+			{{ card.species|length }} arter
+			</span>
+		</div>
+		{% if app.user in card.subscribers %}
+			<div class="flex gap-1 my-3">
+				<button data-action="card#sync">
+					Synka span
+				</button>
+				<button data-action="card#syncSpecies">
+					Synka arter
+				</button>
+			</div>
+		{% endif %}
+
+		<hr class="mb-3 mb-p-0 hide-print">
+		<section class="card gap-p-1">
+
+			{% for group in speciesGroups %}
+				{% set species_group = [] %}
+				{% for genus in group.Genus %}
+					{% set species_group = genus.species|merge(species_group) %}
+				{% endfor %}
+
+				{% set class = 'w-p-100 block-p' %}
+				{% set counts = species_group|length %}
+
+				{% if counts < 1 %}
+					{% set class = 'w-p-17' %}
+				{% elseif counts < 3 %}
+					{% set class = 'w-p-30' %}
+				{% elseif counts < 6 %}
+					{% set class = 'w-p-50' %}
+
+				{% endif %}
+				<div class="family  inline-p">
+
+					<h3 class="capitalize my-p-0">
+						{{ group.VernacularName }}
+					</h3>
+					<ul class="flex gap-05 wrap  inline-p mb-3 mb-p-0">
+
+
+						{% for species in species_group %}
+							{% set link = card.firstSighting(species) %}
+							{% set class= (link) ? 'sighted' : '' %}
+							<li class="w-20 w-m-42 capitalize {{ class }}">
+								{% if link %}
+									<a href="{{ path('app_sighting_show', {'id': link.id}) }}" class="underline"
+									   target="_blank">
+										{{ species.VernacularName }}
+									</a>
+								{% else %}
+									<a href="{{ path('app_sighting_new', {'species': species.id}) }}">
+										{{ species.VernacularName }}
+									</a>
+								{% endif %}
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endfor %}
+
+		</section>
+	</div>
+{% endblock %}
+

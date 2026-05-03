@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+{% block body %}
+	<main>
+		<h1 class="mb-2">
+			Krysskort
+		</h1>
+		{% if app.user %}
+			<div class="mb-2">
+				<a href="{{ path('app_new_card') }}" class="button">Skapa nytt</a>
+			</div>
+		{% endif %}
+		<hr>
+		<ol class="list">
+			{% for index, card in cards %}
+				<li class="flex center-vertical py-1 bb-1">
+					<div class="flex center-vertical gap-2">
+						<div class="index">
+							{{ index + 1 }}
+						</div>
+						<div>
+							<span>{{ card.name }}</span><br>
+							<small>{{ card.DistinctSightings|length }} av {{ card.species|length }}</small>
+						</div>
+					</div>
+					<div class="flex gap-1 center-vertical">
+						<a href="{{ path('app_cards_cards_show', {'card': card.id}) }}">
+							<img src="{{ asset('assets/eye_white.svg') }}">
+							Visa</a>
+
+					</div>
+				</li>
+			{% endfor %}
+		</ol>
+	</main>
+{% endblock %}

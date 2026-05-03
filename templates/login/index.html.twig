@@ -1,0 +1,33 @@
+{# templates/login/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{# ... #}
+
+{% block body %}
+	<main>
+
+		{% if error %}
+			<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+		{% endif %}
+
+		<form class="w-30 flex wrap gap-2 w-m-100" action="{{ path('app_login') }}" method="post">
+			<div class="w-100">
+
+				<label for="username">E-post:</label>
+				<input type="text" id="username" name="_username" value="{{ last_username }}">
+
+			</div>
+			<div class="w-100">
+
+				<label for="password">Lösenord:</label>
+				<input type="password" id="password" name="_password">
+			</div>
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+			{# If you want to control the URL the user is redirected to on success
+        <input type="hidden" name="_target_path" value="/account"> #}
+
+			<button type="submit">Logga in</button>
+		</form>
+	</main>
+{% endblock %}

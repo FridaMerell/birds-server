@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Span{% endblock %}
+
+{% block body %}
+	<main>
+		<div class="flex row gap-1 mb-3">
+			<div class="w-45 w-m-100 ">
+				<a class="flex gap-1 bottom-vertical mb-4"
+				   href="{{ path('app_species', {'species': sighting.species.id}) }}">
+					<h1 class="capitalize">{{ sighting.species.vernacularName }}</h1>
+					<span>{{ sighting.species.scientificName }}</span>
+				</a>
+				<div>
+					<small class="mb-1">
+						{{ sighting.user }}<br>
+						{{ sighting.dateTime|date('y-m-d  H:i') }}
+					</small><br>
+					<h6 class="medium my-1">
+						Plats:
+					</h6>
+					<span>{{ sighting.location }}</span>
+					{% if sighting.comment %}
+						<h6>
+							Kommentar:
+						</h6>
+						<span>{{ sighting.comment }}</span>
+					{% endif %}
+				</div>
+			</div>
+			<div class="w-45 w-m-100">
+				{% include 'Partials/species_tree.html.twig' with {species: sighting.species} %}
+
+			</div>
+		</div>
+
+		{% if app.user == sighting.user %}
+
+			<div class="flex gap-2 my-2">
+				{{ include('sighting/_delete_form.html.twig') }}
+
+				<a href="{{ path('app_sighting_edit', {'id': sighting.id}) }}" class="button">Redigera</a>
+			</div>
+		{% endif %}
+		<hr>
+
+		<div class="extra flex gap-1">
+
+			<article data-controller="artfakta" data-artfakta-id-value="{{ sighting.species.taxonomyId }}" class="w-45">
+				<div data-artfakta-target="artfaktaApi"></div>
+			</article>
+		</div>
+	</main>
+{% endblock %}

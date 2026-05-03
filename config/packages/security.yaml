@@ -1,0 +1,48 @@
+# config/packages/security.yaml
+security:
+  password_hashers:
+    Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: "auto"
+  providers:
+    app_user_provider:
+      entity:
+        class: App\Entity\User
+        property: email
+  firewalls:
+    login_link:
+      pattern: ^/one-time-link
+      login_link:
+        check_route: api_login_check
+        signature_properties: ["id", "email"]
+        max_uses: 1
+        lifetime: 3600
+        success_handler: App\Security\AuthenticationSuccessHandler
+    api:
+      pattern: /*
+      stateless: true
+      provider: app_user_provider
+      
+      entry_point: jwt
+      json_login:
+        check_path: /login
+        success_handler: lexik_jwt_authentication.handler.authentication_success
+        failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        username_path: email
+        password_path: password
+      jwt: ~
+      refresh_jwt:
+        check_path: api_refresh_token
+
+  role_hierarchy:
+    ROLE_READER: []
+    ROLE_USER: [ROLE_READER]
+    ROLE_COMPANY_ADMIN: [ROLE_EDITOR]
+    ROLE_ADMIN: [ROLE_COMPANY_ADMIN]
+    ROLE_SUPER_ADMIN: [ROLE_ADMIN]
+
+  access_control:
+    # ...
+    - { path: ^/, roles: PUBLIC_ACCESS }
+    - { path: ^/api, roles: ROLE_USER }
+    - { path: ^/admin, roles: ROLE_ADMIN }
+    # ...
+# ...

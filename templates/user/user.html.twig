@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+{% block title %}
+	Profil
+{% endblock %}
+
+{% block body %}
+	<main>
+		<h1 class="mb-2">
+			Användarprofil
+		</h1>
+		<hr>
+
+		<div data-controller="user">
+			<form data-user-target="form" data-action="user#save" class="my-2 gap-2 flex wrap">
+				<div class="w-100">
+
+					<label for="username" class="w-100">Användarnamn</label>
+					<input type="text" id="username" name="username" value="{{ user.username }}">
+				</div>
+				<div class="w-100">
+					<label for="email" class="w-100">E-post
+					</label>
+					<input type="email" id="email" name="email" value="{{ user.email }}">
+				</div>
+				<button>Spara</button>
+			</form>
+		</div>
+	</main>
+
+{% endblock %}

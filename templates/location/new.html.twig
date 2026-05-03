@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+{% block title %}
+	Ny plats
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+{% endblock %}
+
+
+{% block body %}
+	<main>
+		<h1 class="my-2">
+			Skapa ny plats
+		</h1>
+		<hr>
+		<form data-controller="location" class="flex wrap row" data-location-maps-value="{{ google_maps }}"
+			  data-action="submit->location#save">
+			<div class="w-40 w-m-100 ">
+				<div class="my-1">
+					<label for="name">Namn</label>
+					<input type="text" data-location-target="name" id="name" name="name">
+				</div>
+				<div class="my-1">
+					<label for="radius">Radie (km)</label>
+					<input type="number" step="any" name="radius" id="radius" data-location-target="radius"
+						   data-action="keyup->location#changeRadius">
+				</div>
+				<button class="my-3">Spara</button>
+			</div>
+			<div class="w-40  w-m-100">
+				<div class="map" data-location-target="map"></div>
+			</div>
+		</form>
+	</main>
+{% endblock %}
+

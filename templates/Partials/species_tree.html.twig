@@ -1,0 +1,18 @@
+{% block species_data %}
+	<div class="species-data my-2">
+		<div class="taxonomy">
+			<span>{{ species.family.taxOrder.class|capitalize }}</span>
+			<div>
+				<div class="hierarchy-tree"></div>
+				<div class="taxonomy">
+					<span>{{ species.family.taxOrder|capitalize }}</span>
+					<div class="hierarchy-tree">
+						<div class="taxonomy">
+							<span>{{ species.family|capitalize }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

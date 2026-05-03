@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Redigera glutt{% endblock %}
+
+{% block body %}
+	<main>
+		<h1>Redigera</h1>
+
+		{{ include('sighting/_form.html.twig', {'button_label': 'Uppdatera'}) }}
+		{{ include('sighting/_delete_form.html.twig') }}
+	</main>
+{% endblock %}

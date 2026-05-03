@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	{{ species.vernacularName|capitalize }}
+{% endblock %}
+
+{% block body %}
+	<section class="base-data flex row wrap gap-3 mb-3">
+		<div class="w-40 w-m-100">
+			<div class="flex bottom-vertical my-2 gap-1"><h1 class="">{{ species.vernacularName|capitalize }}</h1>
+				<small class="capitalize">{{ species.scientificName }}</small></div>
+
+			<span>{{ species.swedishProminence }}</span>
+
+			<div class="gap-3 my-2">
+				<a href="{{ path('app_sighting_new', {'species': species.id}) }}" class="button">Registrera glutt</a>
+			</div>
+		</div>
+		<div class="w-40 w-m-100">
+			{% include 'Partials/species_tree.html.twig' with {species: species} %}
+		</div>
+	</section>
+	<div class="extra flex gap-1">
+
+		<article data-controller="artfakta" data-artfakta-id-value="{{ species.taxonomyId }}" class="w-45">
+			<div data-artfakta-target="artfaktaApi"></div>
+		</article>
+	</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base.html.twig" %}
+{% block title %}
+	Spaningar
+{% endblock %}
+{# @var sightings \App\Entity\Sighting[] #}
+
+{% block body %}
+
+	<main>
+		<h1 class="mb-2">Skådningar</h1>
+		<div class="flex gap-2 mb-1">
+			<div class="dropdown" data-controller="components--dropdown">
+				<name data-components--dropdown-target="name" data-action="click->components--dropdown#open">
+					Registrera
+				</name>
+				<choices class="content" data-components--dropdown-target="content">
+					<a href="{{ path('app_sighting_new') }}">Span</a>
+					<a href="{{ path('app_bulk') }}">Bulkspan</a>
+
+				</choices>
+
+			</div>
+			{% include 'Partials/sighting_settings.html.twig' %}
+		</div>
+		<hr class="mb-2">
+		<ol class="list mb-3">
+			{% for index, sighting in sightings %}
+
+				<li class="flex py-1 py-m-2 gap-4 gap-m-1 wrap bb-1">
+					<div class="flex gap-3 gap-m-1 w-30 w-m-100">
+						<div class="index">
+							{{ index + 1 }}
+						</div>
+						<div>
+							<span class="medium capitalize">{{ sighting.Species.VernacularName }}</span><br>
+							<small>{{ sighting.user }} – {{ sighting.dateTime|date('y-m-d') }}</small>
+						</div>
+					</div>
+					<div class="w-30 w-m-100">
+						<span>{{ sighting.location }}</span><br>
+						<span>{{ sighting.comment }}</span>
+					</div>
+					<div class="flex gap-1 center-vertical w-30 w-m-100 justify-right">
+						<a href="{{ path('app_sighting_show', {'id': sighting.id}) }}">
+							<i>
+								<img src="{{ asset('assets/eye_white.svg') }}" width="18" height="14">
+							</i>
+							<span>Visa</span>
+						</a>
+						{% if app.user == sighting.user %}
+							<div class="divider">
+							</div>
+							<a href="{{ path('app_sighting_edit', {'id': sighting.id}) }}">
+								<i>
+									<img src="{{ asset('assets/edit.svg') }}" width="18" height="14">
+								</i>
+								<span>Redigera</span>
+							</a>
+						{% endif %}
+					</div>
+				</li>
+			{% endfor %}
+		</ol>
+		<div class="navigation flex gap-1">
+			{% if p is defined %}
+				{% if p > 0 %}
+					<a href="{{ path('app_sighting_index', {'p': p - 1}) }}" class="secondary button">Förgående
+						sida</a>
+				{% endif %}
+				<a href="{{ path('app_sighting_index', {'p': p +1}) }}" class="primary button">Nästa sida</a>
+			{% endif %}
+		</div>
+	</main>
+{% endblock %}

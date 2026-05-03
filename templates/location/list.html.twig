@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+{% block title %}
+	Platser
+{% endblock %}
+
+{% block body %}
+	<main>
+		<h1 class="mb-2">
+			Platser
+		</h1>
+		<a href="{{ path('app_new_location') }}" class="button">Ny plats</a>
+		<hr>
+		<ol class="list">
+			{% for index, location in locations %}
+				<li class="flex center-vertical bb-1 py-1 p-m-y-2">
+					<div class="flex gap-2">
+						<div class="index">
+							{{ index + 1 }}
+						</div>
+						<div>
+							<span>{{ location.name }}</span><br>
+							<small>{{ location.radius }}km</small>
+						</div>
+					</div>
+					<div>
+						<a href="{{ path('app_show_location', {'id': location.id}) }}">
+							<img
+									src="{{ asset('assets/eye_white.svg') }}" alt="Visa plats">
+						<span>Visa</span></a>
+					</div>
+				</li>
+			{% endfor %}
+		</ol>
+	</main>
+{% endblock %}
+
