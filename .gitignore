@@ -54,14 +54,14 @@
 
 /.env.test
 .env.local
-.env
 /.env.local.*
 artreg.sql 
 
 /.idea
 /node_modules
 /vendor
-/var
+/var/log/*
+/var/cache/*
 /var/data.db
 
 /docker-compose.override.yml
