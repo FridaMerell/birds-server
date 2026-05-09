@@ -38,11 +38,17 @@ class DetectionRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /** @return array{species: \App\Entity\Taxon\Species, detectionCount: string, latestDetection: mixed}[] */
+    /** @return array{speciesId: int, scientificName: string, vernacularName: ?string, detectionCount: string, latestDetection: mixed}[] */
     public function findSpeciesSummaryByDevice(int $deviceId): array
     {
         return $this->createQueryBuilder('d')
-            ->select('s AS species, COUNT(d.id) AS detectionCount, MAX(d.detectedAt) AS latestDetection')
+            ->select(
+                's.id AS speciesId',
+                's.scientificName AS scientificName',
+                's.vernacularName AS vernacularName',
+                'COUNT(d.id) AS detectionCount',
+                'MAX(d.detectedAt) AS latestDetection',
+            )
             ->join('d.species', 's')
             ->where('d.detectedAt > :since')
             ->andWhere('d.device = :deviceId')

@@ -37,7 +37,6 @@ class DetectionController extends AbstractController
         $rows = $this->repo->findSpeciesSummaryByDevice((int) $deviceId);
 
         $data = array_map(function (array $row): array {
-            $species = $row['species'];
             $latestRaw = $row['latestDetection'];
             $latest = $latestRaw instanceof \DateTimeInterface
                 ? \DateTimeImmutable::createFromInterface($latestRaw)
@@ -45,9 +44,9 @@ class DetectionController extends AbstractController
 
             return [
                 'species' => [
-                    'id'             => $species->getId(),
-                    'scientificName' => $species->getScientificName(),
-                    'vernacularName' => $species->getVernacularName(),
+                    'id'             => $row['speciesId'],
+                    'scientificName' => $row['scientificName'],
+                    'vernacularName' => $row['vernacularName'],
                 ],
                 'detectionCount'  => (int) $row['detectionCount'],
                 'latestDetection' => $latest->setTimezone(new \DateTimeZone('UTC'))
