@@ -22,3 +22,4 @@ RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --no-scripts --optimize
 EXPOSE 8080
 
 CMD su -s /bin/sh www-data -c "APP_ENV=prod php bin/console cache:warmup" && apache2-foreground
+CMD su -s /bin/sh www-data -c "APP_ENV=prod php bin/console lexik:jwt:generate-keypair"

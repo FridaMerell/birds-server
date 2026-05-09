@@ -25,6 +25,39 @@ class DetectionController extends AbstractController
         private readonly string $piApiKey,         // injected via services.yaml
     ) {}
 
+
+    #[Route('/species-summary', methods: ['GET'])]
+    public function statusRequest(Request $request): JsonResponse
+    {
+        $deviceId = $request->query->get('deviceId');
+        if (!ctype_digit((string) $deviceId)) {
+            return $this->json(['error' => 'Missing or invalid deviceId'], 400);
+        }
+
+        $rows = $this->repo->findSpeciesSummaryByDevice((int) $deviceId);
+
+        $data = array_map(function (array $row): array {
+            $species = $row['species'];
+            $latestRaw = $row['latestDetection'];
+            $latest = $latestRaw instanceof \DateTimeInterface
+                ? \DateTimeImmutable::createFromInterface($latestRaw)
+                : new \DateTimeImmutable($latestRaw);
+
+            return [
+                'species' => [
+                    'id'             => $species->getId(),
+                    'scientificName' => $species->getScientificName(),
+                    'vernacularName' => $species->getVernacularName(),
+                ],
+                'detectionCount'  => (int) $row['detectionCount'],
+                'latestDetection' => $latest->setTimezone(new \DateTimeZone('UTC'))
+                    ->format(\DateTimeInterface::ATOM),
+            ];
+        }, $rows);
+
+        return $this->json($data);
+    }
+
     // ── POST /api/detections ──────────────────────────────────────────────────
     #[Route('/detections', methods: ['POST'])]
     public function ingest(Request $request): JsonResponse
