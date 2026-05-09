@@ -16,10 +16,9 @@ WORKDIR /var/www/html
 COPY . .
 
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --no-scripts --optimize-autoloader --no-interaction \
-    && mkdir -p var/cache var/log \
-    && chown -R www-data:www-data var/
+    && mkdir -p var/cache var/log config/jwt \
+    && chown -R www-data:www-data var/ config/jwt
 
 EXPOSE 8080
 
-CMD su -s /bin/sh www-data -c "APP_ENV=prod php bin/console cache:warmup" && apache2-foreground
-CMD su -s /bin/sh www-data -c "APP_ENV=prod php bin/console lexik:jwt:generate-keypair"
+CMD su -s /bin/sh www-data -c "APP_ENV=prod php bin/console lexik:jwt:generate-keypair --skip-if-exists && APP_ENV=prod php bin/console cache:warmup" && apache2-foreground
